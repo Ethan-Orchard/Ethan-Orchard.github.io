@@ -450,6 +450,9 @@ void core::s_loop(void *user_data)
 
 void core::run()
 {
+
+    std::cout << "checkpoint 100" << std::endl;
+
     for (int i = 0; i < 225; i++)
     {
         map[i].setValues(20, 10, "assets/TileSet1.png", false);
@@ -457,6 +460,8 @@ void core::run()
         map[i].setSrcRect(32, 16, 16, 16);
         map[i].setDestRect((i % 15) * 70, (i / 15) * 70, 70, 70);
     }
+
+    std::cout << "checkpoint 101" << std::endl;
     for (int i = 0; i < 225; i++)
     {
         moveRangeMap[i].setValues(20, 10, "assets/TileSet1.png", false);
@@ -466,14 +471,19 @@ void core::run()
         moveRangeMap[i].m_draw = false;
     }
 
+    std::cout << "checkpoint 102" << std::endl;
+
     char1.setSrcImage("assets/pkmn_teddiursa.png");
 
+    std::cout << "checkpoint 103" << std::endl;
 
     char1.name = "char1";
 
+    std::cout << "checkpoint 104" << std::endl;
 
     createCharacter(&char1, "assets/LordStats.txt");
 
+    std::cout << "checkpoint 105" << std::endl;
 
     char2.setSrcImage("assets/pkmn_mudkip2.png");
 
@@ -481,8 +491,11 @@ void core::run()
 
     createCharacter(&char2, "assets/CalebStats.txt");
 
+    std::cout << "checkpoint 105a" << std::endl;
 
     char3.setSrcImage("assets/pkmn_squirtle.png");
+
+    std::cout << "checkpoint 105b" << std::endl;
 
     char3.name = "char3";
 
@@ -500,10 +513,14 @@ void core::run()
 
     characters.push_back(&char3);
 
+    std::cout << "checkpoint 106" << std::endl;
+
     for (int i = 0; i < characters.size(); i++)
     {
         characters.at(i)->m_texture = load_texture(characters.at(i)->m_srcImage);
     }
+
+    std::cout << "checkpoint 107" << std::endl;
 
     createEnemy(&enemy1);
 
@@ -517,6 +534,8 @@ void core::run()
     }
 
     quit = false;
+
+    std::cout << "checkpoint 108" << std::endl;
 
     cursor.m_tex = load_texture("assets/cursor.png");
 
@@ -538,6 +557,8 @@ void core::run()
     waitMenu.m_texture = load_texture(waitMenu.m_SrcString);
     waitMenu.createCursor();
 
+    std::cout << "checkpoint 109" << std::endl;
+
     waitMenu.setDestRect(0,0,210,150);
 
     attackMenu.m_SrcString = "assets/attackMenu.png";
@@ -555,24 +576,42 @@ void core::run()
 
     combatPreviewMenu.loadWordTextures();
 
+    std::cout << "checkpoint 110" << std::endl;
+
     selectedMenu = nullptr;
+
+    std::cout << "checkpoint 110a" << std::endl;
 
     map_Boundary.x = 14;
     map_Boundary.y = 12;
 
-    m_enemyPhasePopUp.m_texture = load_texture("assets/EnemyPhase.png");
+    std::cout << "checkpoint 110b" << std::endl;
+
+    //m_enemyPhasePopUp.m_texture = load_texture("assets/EnemyPhase.png");
+
+    std::cout << "checkpoint 110c" << std::endl;
 
     m_enemyPhasePopUp.setSrcRect(0, 80, 250, 20);
     m_enemyPhasePopUp.setDestRect(550, 550, 1100, 50);
 
+    std::cout << "checkpoint 110d" << std::endl;
+
     m_enemyPhasePopUp.core = this;
 
-    m_playerPhasePopUp.m_texture = load_texture("assets/PlayerPhase.png");
+    std::cout << "checkpoint 110e" << std::endl;
+
+    //m_playerPhasePopUp.m_texture = load_texture("assets/PlayerPhase.png");
+
+    std::cout << "checkpoint 110f" << std::endl;
 
     m_playerPhasePopUp.setSrcRect(0, 80, 250, 20);
     m_playerPhasePopUp.setDestRect(550, 550, 11100, 50);
 
+    std::cout << "checkpoint 110g" << std::endl;
+
     m_playerPhasePopUp.core = this;
+
+    std::cout << "checkpoint 111" << std::endl;
 
     font tempFont;
 
@@ -726,6 +765,8 @@ void core::run()
     m_healthWord.m_fonts.at(5).setDestRect(200, 800, 32, 32);
 
 #ifdef __EMSCRIPTEN__
+    std::cout << "checkpoint 112" << std::endl;
+
     emscripten_set_main_loop_arg(s_loop, this, 0, 1);
 #else
     while (!quit)
