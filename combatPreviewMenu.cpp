@@ -30,7 +30,7 @@ combatPreviewMenu::combatPreviewMenu()
 
 
 
-    std::cout << "checkpoint 4" << std::endl;
+    std::cout << "checkpoint CPM constructor" << std::endl;
 
     m_damageWord.m_fonts.at(0).setSrcRect(57, 16, 16, 16);
     m_damageWord.m_fonts.at(0).setDestRect(150, 50, 32, 32);
