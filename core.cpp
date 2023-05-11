@@ -89,6 +89,7 @@ void core::loop()
             }
             if(freeHandling)
             {
+                std::cout << "entered free handling" << std::endl;
                 switch (e.key.keysym.sym)
                 {
                     case SDLK_ESCAPE:

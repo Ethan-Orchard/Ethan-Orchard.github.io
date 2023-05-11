@@ -47,6 +47,7 @@ void attackMenu::update(SDL_Keysym _key)
             if(m_optionHighlighted == 1)
             {
                 m_optionSelected = 1;
+                std::cout << "option 1 selection attack menu" << std::endl;
                 core->selectedMenu = &core->combatPreviewMenu;
             }
             else if(m_optionHighlighted == 2)

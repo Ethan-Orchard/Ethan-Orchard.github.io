@@ -307,9 +307,9 @@ void character::attack()
                 {
                     if(m_speed - 5 > core->enemies.at(i)->m_speed)
                     {
-                        core->enemies.at(i)->setHealth(-m_strength);
+                        core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     }
-                    core->enemies.at(i)->setHealth(-m_strength);
+                    core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     if(core->enemies.at(i)->m_isAlive)
                     {
                         m_experience += 10;
@@ -329,9 +329,9 @@ void character::attack()
                 {
                     if(m_speed - 5 > core->enemies.at(i)->m_speed)
                     {
-                        core->enemies.at(i)->setHealth(-m_strength);
+                        core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     }
-                    core->enemies.at(i)->setHealth(-m_strength);
+                    core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     if(core->enemies.at(i)->m_isAlive)
                     {
                         m_experience += 10;
@@ -351,9 +351,9 @@ void character::attack()
                 {
                     if(m_speed - 5 > core->enemies.at(i)->m_speed)
                     {
-                        core->enemies.at(i)->setHealth(-m_strength);
+                        core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     }
-                    core->enemies.at(i)->setHealth(-m_strength);
+                    core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     if(core->enemies.at(i)->m_isAlive)
                     {
                         m_experience += 10;
@@ -373,9 +373,9 @@ void character::attack()
                 {
                     if(m_speed - 5 > core->enemies.at(i)->m_speed)
                     {
-                        core->enemies.at(i)->setHealth(-m_strength);
+                        core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     }
-                    core->enemies.at(i)->setHealth(-m_strength);
+                    core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     if(core->enemies.at(i)->m_isAlive)
                     {
                         m_experience += 10;
@@ -571,7 +571,7 @@ enemy* character::findEnemyToAttack()
         case 1:
             for(int i = 0; i < core->enemies.size(); i++)
             {
-                if (core->enemies.at(i)->m_coords.y == m_coords.y && core->enemies.at(i)->m_coords.x - 1 == m_coords.x)
+                if (core->enemies.at(i)->m_coords.y + 1 == m_coords.y && core->enemies.at(i)->m_coords.x == m_coords.x)
                 {
                     return core->enemies.at(i);
                 }

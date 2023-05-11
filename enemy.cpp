@@ -150,9 +150,9 @@ void enemy::attack(character *_charToAttack)
         setDestRect(m_coords.x * 70, m_coords.y * 70, 70, 70);
         if(m_speed - 5 > _charToAttack->m_speed)
         {
-            _charToAttack->setHealth(-m_strength);
+            _charToAttack->setHealth(-(m_strength - _charToAttack->m_defense));
         }
-        _charToAttack->setHealth(-m_strength);
+        _charToAttack->setHealth(-(m_strength - _charToAttack->m_defense));
     }
 }
 
