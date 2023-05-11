@@ -14,7 +14,7 @@
 
 core::core()
 {
-    std::cout << "checkpoint 5" << std::endl;
+    std::cout << "checkpoint core pre window" << std::endl;
 
     SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1050, 1050, SDL_WINDOW_RESIZABLE);
 
