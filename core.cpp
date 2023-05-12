@@ -15,7 +15,7 @@
 core::core()
 {
 
-    SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 840, 1050, SDL_WINDOW_RESIZABLE);
+    SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 980, 980, SDL_WINDOW_RESIZABLE);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
@@ -1050,4 +1050,3 @@ void core::createEnemy(enemy *_enemy)
 
     enemies.push_back(_enemy);
 }
-
