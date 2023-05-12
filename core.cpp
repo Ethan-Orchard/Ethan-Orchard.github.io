@@ -16,7 +16,7 @@ core::core()
 {
     std::cout << "checkpoint core pre window" << std::endl;
 
-    SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 980, 980, SDL_WINDOW_RESIZABLE);
+    SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 840, 1050, SDL_WINDOW_RESIZABLE);
 
     std::cout << "checkpoint 6" << std::endl;
 
@@ -656,7 +656,7 @@ void core::run()
 
     map_Boundary.x = 13;
     map_Boundary.y = 13;
-    
+
     std::cout << "checkpoint 110b" << std::endl;
 
     //m_enemyPhasePopUp.m_texture = load_texture("assets/EnemyPhase.png");
@@ -1129,4 +1129,3 @@ void core::createEnemy(enemy *_enemy)
 
     enemies.push_back(_enemy);
 }
-
