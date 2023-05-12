@@ -10,27 +10,14 @@ combatPreviewMenu::combatPreviewMenu()
 
     m_optionSelected = 0;
 
-    std::cout << "checkpoint 1" << std::endl;
-
     setNumRects();
-
-    std::cout << "checkpoint 2" << std::endl;
 
     font tempFont;
 
     for (int i = 0; i < 6; i++)
     {
         m_damageWord.m_fonts.push_back(tempFont);
-        std::cout << i << std::endl;
     }
-
-    std::cout << "checkpoint 3" << std::endl;
-
-    std::cout << m_damageWord.m_fonts.size() << std::endl;
-
-
-
-    std::cout << "checkpoint CPM constructor" << std::endl;
 
     m_damageWord.m_fonts.at(0).setSrcRect(57, 16, 16, 16);
     m_damageWord.m_fonts.at(0).setDestRect(150, 50, 32, 32);
@@ -134,7 +121,6 @@ void combatPreviewMenu::update(SDL_Keysym _key)
             {
                 core->selectedCharacter->levelUp();
             }
-            std::cout << "experience: " << core->selectedCharacter->m_experience << std::endl;
             core->selectedCharacter->m_hasMoved = true;
             core->cursor.m_DestRect = core->selectedCharacter->m_DestRect;
             core->cursor.m_coords.x = core->selectedCharacter->m_coords.x;

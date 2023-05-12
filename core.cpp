@@ -14,19 +14,12 @@
 
 core::core()
 {
-    std::cout << "checkpoint core pre window" << std::endl;
 
     SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 840, 1050, SDL_WINDOW_RESIZABLE);
 
-    std::cout << "checkpoint 6" << std::endl;
-
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    std::cout << "checkpoint 7" << std::endl;
-
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-
-    std::cout << "checkpoint 8" << std::endl;
 }
 
 void core::loop()
@@ -46,7 +39,6 @@ void core::loop()
 
     if(charsMoved == characters.size())
     {
-        std::cout << "turn reset" << std::endl;
         for(int i = 0; i < enemies.size(); i++)
         {
             enemies.at(i)->update();
@@ -77,14 +69,12 @@ void core::loop()
             if (selectedMenu != nullptr)
             {
                 freeHandling = false;
-                std::cout << "menu should be open" << std::endl;
                 selectedMenu->update(e.key.keysym);
                 menuOptionSelected = selectedMenu->getOptionSelected(freeHandling);
                 if(menuOptionSelected != 0)
                 {
                     selectedMenu = nullptr;
                 }
-                std::cout << "menu option selected: " << menuOptionSelected << std::endl;
             }
 
             if(freeHandling)
@@ -485,51 +475,36 @@ void core::s_loop(void *user_data)
 void core::run()
 {
 
-    std::cout << "checkpoint 100" << std::endl;
-
     std::fstream data_file;
 
     data_file.open("assets/tiles.txt", std::ios::in);
-
-    std::cout << "checkpoint 100 a" << std::endl;
 
     std::vector<std::string> values;
     int i = 0;
 
     if(data_file.is_open())
     {
-        std::cout << "checkpoint 100 b" << std::endl;
         std::string data;
         while(getline(data_file, data))
         {
-            std::cout << "checkpoint 100 c while loop" << std::endl;
             values = stripWhitespaces(data);
             if(values.at(3) == "true")
             {
-                std::cout << "checkpoint 100 d move true" << std::endl;
                 map[i].setValues(std::stoi(values.at(0)), std::stoi(values.at(1)), values.at(2), true);
             }
             else if(values.at(3) == "false")
             {
-                std::cout << "checkpoint 100 e move false" << std::endl;
                 map[i].setValues(std::stoi(values.at(0)), std::stoi(values.at(1)), values.at(2), false);
             }
             map[i].m_texture = load_texture(map[i].m_srcImage);
-
-            std::cout << "checkpoint 100 f" << std::endl;
             map[i].setSrcRect(std::stoi(values.at(4)), std::stoi(values.at(5)), 16, 16);
-            std::cout << "checkpoint 100 g" << std::endl;
             map[i].setDestRect((i % 15) * 70, (i / 15) * 70, 70, 70);
-            std::cout << "checkpoint 100 h" << std::endl;
             i++;
 
         }
         data_file.close();
         mapSize = i;
-        std::cout << "MAP SIZE: " << mapSize << std::endl;
     }
-
-    std::cout << "checkpoint 101" << std::endl;
     for (int i = 0; i < 225; i++)
     {
         moveRangeMap[i].setValues(20, 10, "assets/TileSet1.png", false);
@@ -539,19 +514,11 @@ void core::run()
         moveRangeMap[i].m_draw = false;
     }
 
-    std::cout << "checkpoint 102" << std::endl;
-
     char1.setSrcImage("assets/pkmn_teddiursa.png");
-
-    std::cout << "checkpoint 103" << std::endl;
 
     char1.name = "char1";
 
-    std::cout << "checkpoint 104" << std::endl;
-
     createCharacter(&char1, "assets/LordStats.txt");
-
-    std::cout << "checkpoint 105" << std::endl;
 
     char2.setSrcImage("assets/pkmn_mudkip2.png");
 
@@ -559,11 +526,7 @@ void core::run()
 
     createCharacter(&char2, "assets/CalebStats.txt");
 
-    std::cout << "checkpoint 105a" << std::endl;
-
     char3.setSrcImage("assets/pkmn_squirtle.png");
-
-    std::cout << "checkpoint 105b" << std::endl;
 
     char3.name = "char3";
 
@@ -585,14 +548,11 @@ void core::run()
 
     characters.push_back(&char3);
 
-    std::cout << "checkpoint 106" << std::endl;
 
     for (int i = 0; i < characters.size(); i++)
     {
         characters.at(i)->m_texture = load_texture(characters.at(i)->m_srcImage);
     }
-
-    std::cout << "checkpoint 107" << std::endl;
 
     createEnemy(&enemy1);
 
@@ -606,8 +566,6 @@ void core::run()
     }
 
     quit = false;
-
-    std::cout << "checkpoint 108" << std::endl;
 
     cursor.m_tex = load_texture("assets/cursor.png");
 
@@ -629,8 +587,6 @@ void core::run()
     waitMenu.m_texture = load_texture(waitMenu.m_SrcString);
     waitMenu.createCursor();
 
-    std::cout << "checkpoint 109" << std::endl;
-
     waitMenu.setDestRect(0,0,210,150);
 
     attackMenu.m_SrcString = "assets/attackMenu.png";
@@ -648,42 +604,24 @@ void core::run()
 
     combatPreviewMenu.loadWordTextures();
 
-    std::cout << "checkpoint 110" << std::endl;
-
     selectedMenu = nullptr;
-
-    std::cout << "checkpoint 110a" << std::endl;
 
     map_Boundary.x = 13;
     map_Boundary.y = 13;
-
-    std::cout << "checkpoint 110b" << std::endl;
-
     //m_enemyPhasePopUp.m_texture = load_texture("assets/EnemyPhase.png");
-
-    std::cout << "checkpoint 110c" << std::endl;
 
     m_enemyPhasePopUp.setSrcRect(0, 80, 250, 20);
     m_enemyPhasePopUp.setDestRect(550, 550, 1100, 50);
 
-    std::cout << "checkpoint 110d" << std::endl;
-
     m_enemyPhasePopUp.core = this;
-
-    std::cout << "checkpoint 110e" << std::endl;
-
     //m_playerPhasePopUp.m_texture = load_texture("assets/PlayerPhase.png");
-
-    std::cout << "checkpoint 110f" << std::endl;
 
     m_playerPhasePopUp.setSrcRect(0, 80, 250, 20);
     m_playerPhasePopUp.setDestRect(550, 550, 11100, 50);
 
-    std::cout << "checkpoint 110g" << std::endl;
 
     m_playerPhasePopUp.core = this;
 
-    std::cout << "checkpoint 111" << std::endl;
 
     font tempFont;
 
@@ -837,7 +775,6 @@ void core::run()
     m_healthWord.m_fonts.at(5).setDestRect(200, 800, 32, 32);
 
 #ifdef __EMSCRIPTEN__
-    std::cout << "checkpoint 112" << std::endl;
 
     emscripten_set_main_loop_arg(s_loop, this, 0, 1);
 #else
@@ -931,7 +868,6 @@ bool core::check_bottom_bound_move(character* _selected_character)
 
 void core::createCharacter(character* _character, std::string _fileName)
 {
-    std::cout << "checkpoint 6bx " << _fileName << std::endl;
 
     std::fstream data_file;
 
@@ -1014,34 +950,25 @@ std::vector<std::string> core::stripWhitespaces(std::string _string)
 
     int finishedStrings = 0;
 
-    std::cout << _string << std::endl;
-
     for(int i = 0; i < 7; i++)
     {
         finishedString.push_back("");
     }
 
-    std::cout << _string.size() << std::endl;
-
     for(int i = 0; i < _string.size(); i++)
     {
-        std::cout << _string[i] << std::endl;
         if(_string[i] != ' ')
         {
-            std::cout << "checkpoint 1000" << std::endl;
             currentString.push_back(_string[i]);
-            std::cout << "checkpoint 1001" << std::endl;
         }
         else
         {
-            std::cout << "checkpoint 1002" << std::endl;
             for(int i = 0; i < currentString.size(); i++)
             {
                 finishedString.at(finishedStrings) = finishedString.at(finishedStrings) + currentString.at(i);
             }
             currentString.clear();
             finishedStrings++;
-            std::cout << finishedStrings << std::endl;
         }
     }
 
@@ -1054,12 +981,6 @@ std::vector<std::string> core::stripWhitespaces(std::string _string)
         currentString.clear();
         finishedStrings++;
     }
-
-    for(int i = 0; i < finishedString.size(); i++)
-    {
-        std::cout << finishedString.at(i) << std::endl;
-    }
-
     return finishedString;
 }
 
@@ -1129,3 +1050,4 @@ void core::createEnemy(enemy *_enemy)
 
     enemies.push_back(_enemy);
 }
+

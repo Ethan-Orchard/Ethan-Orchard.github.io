@@ -90,14 +90,6 @@ void enemy::update()
 
     m_attackOptions = findAttackOptions();
 
-    if(!m_attackOptions.empty())
-    {
-        for (int i = 0; i < m_attackOptions.size(); i++)
-        {
-            std::cout << m_attackOptions.at(i)->name << std::endl;
-        }
-    }
-
     int highestDamageNum = 0;
     int highestDamagePos = 0;
     int currentDamage = 0;

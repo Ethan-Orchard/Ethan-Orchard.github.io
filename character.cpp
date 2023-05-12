@@ -103,13 +103,9 @@ void character::update()
 std::vector<glm::ivec2> character::findMoveBoundary(glm::ivec2 _boundary)
 {
     int yBoundUpper = m_coords.y - m_moveStat;
-    std::cout << yBoundUpper << std::endl;
     int yBoundLower = m_coords.y + m_moveStat;
-    std::cout << yBoundLower << std::endl;
     int xBoundLeft = m_coords.x - m_moveStat;
-    std::cout << xBoundLeft << std::endl;
     int xBoundRight = m_coords.x + m_moveStat;
-    std::cout << xBoundRight << std::endl;
 
     std::vector<glm::ivec2> moveableCoords;
     glm::ivec2 coordsToCheck[50];
@@ -156,7 +152,6 @@ std::vector<glm::ivec2> character::findMoveBoundary(glm::ivec2 _boundary)
             if(distanceCheck <= m_moveStat)
             {
                 moveableCoords.push_back(glm::ivec2(xCoord, yCoord));
-                std::cout << "pushed back: X pos: " << xCoord << " Y pos: " << yCoord << std::endl;
             }
         }
     }
