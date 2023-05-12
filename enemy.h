@@ -9,6 +9,7 @@
 
 #include "object.h"
 #include "word.h"
+#include "healthDisplay.h"
 
 #include <string>
 #include <SDL2/SDL.h>
@@ -83,6 +84,10 @@ public:
     void setNumRects();
 
     void drawStats();
+
+    healthDisplay m_healthDisplay;
+
+    void setHealthDisplayNums();
 
 };
 

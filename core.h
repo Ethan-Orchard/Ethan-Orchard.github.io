@@ -30,6 +30,7 @@
 #include "weapon.h"
 #include "word.h"
 #include "combatPreviewMenu.h"
+#include "healthDisplay.h"
 
 
 class core{
@@ -55,11 +56,15 @@ public:
 
     void createEnemy(enemy* _enemy);
 
+    void createTile();
+
     std::vector<std::string> stripWhitespaces(std::string _string);
 
     SDL_Renderer* renderer;
     tile map[225];
     tile moveRangeMap[225];
+
+    int mapSize;
 
     std::vector<character*> characters;
 
@@ -88,6 +93,7 @@ public:
     menu* selectedMenu;
 
     glm::ivec2 map_Boundary;
+    glm::ivec2 display_Boundary;
 
     std::vector<font> m_fonts;
 

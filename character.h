@@ -15,6 +15,7 @@
 #include "tile.h"
 #include "characterData.h"
 #include "word.h"
+#include "healthDisplay.h"
 
 class item;
 class core;
@@ -38,7 +39,7 @@ public:
 
     void setHealth(int _change);
 
-    void showMoveRange(tile tile[]);
+    void showMoveRange(tile tile[], class tile map[]);
 
     std::vector<glm::ivec2> findMoveBoundary(glm::ivec2 _boundary);
 
@@ -137,6 +138,10 @@ public:
     void drawStats();
 
     enemy* findEnemyToAttack();
+
+    healthDisplay m_healthDisplay;
+
+    void setHealthDisplayNums();
 };
 
 

@@ -16,7 +16,7 @@ core::core()
 {
     std::cout << "checkpoint core pre window" << std::endl;
 
-    SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1050, 1050, SDL_WINDOW_RESIZABLE);
+    SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 980, 980, SDL_WINDOW_RESIZABLE);
 
     std::cout << "checkpoint 6" << std::endl;
 
@@ -46,7 +46,6 @@ void core::loop()
 
     if(charsMoved == characters.size())
     {
-        m_enemyPhasePopUp.draw();
         std::cout << "turn reset" << std::endl;
         for(int i = 0; i < enemies.size(); i++)
         {
@@ -56,13 +55,13 @@ void core::loop()
         {
             characters.at(i)->m_hasMoved = false;
         }
-        m_playerPhasePopUp.draw();
         m_enemyPhase = true;
     }
     else
     {
         m_enemyPhase = false;
     }
+
 
     SDL_Event e = {0};
     while (SDL_PollEvent(&e))
@@ -87,9 +86,9 @@ void core::loop()
                 }
                 std::cout << "menu option selected: " << menuOptionSelected << std::endl;
             }
+
             if(freeHandling)
             {
-                std::cout << "entered free handling" << std::endl;
                 switch (e.key.keysym.sym)
                 {
                     case SDLK_ESCAPE:
@@ -101,15 +100,18 @@ void core::loop()
                         {
                             if (check_left_bound_move(selectedCharacter))
                             {
-                                selectedCharacter->move(-70, 0);
-                                selectedCharacter->m_coords.x -= 1;
-                                selectedCharacter->m_SrcRect = selectedCharacter->m_leftFacing;
-                                selectedCharacter->m_directionFacing = 2;
-
-                                if (check_move_collision(characters, selectedCharacter, enemies))
+                                if(map[selectedCharacter->m_coords.x - 1].m_moveable)
                                 {
-                                    selectedCharacter->move(70, 0);
-                                    selectedCharacter->m_coords.x += 1;
+                                    selectedCharacter->move(-70, 0);
+                                    selectedCharacter->m_coords.x -= 1;
+                                    selectedCharacter->m_SrcRect = selectedCharacter->m_leftFacing;
+                                    selectedCharacter->m_directionFacing = 2;
+
+                                    if (check_move_collision(characters, selectedCharacter, enemies))
+                                    {
+                                        selectedCharacter->move(70, 0);
+                                        selectedCharacter->m_coords.x += 1;
+                                    }
                                 }
                             }
                         }
@@ -128,14 +130,17 @@ void core::loop()
                         {
                             if (check_right_bound_move(selectedCharacter))
                             {
-                                selectedCharacter->move(70, 0);
-                                selectedCharacter->m_coords.x += 1;
-                                selectedCharacter->m_SrcRect = selectedCharacter->m_rightFacing;
-                                selectedCharacter->m_directionFacing = 3;
-                                if (check_move_collision(characters, selectedCharacter, enemies))
+                                if(map[selectedCharacter->m_coords.x + 1].m_moveable)
                                 {
-                                    selectedCharacter->move(-70, 0);
-                                    selectedCharacter->m_coords.x -= 1;
+                                    selectedCharacter->move(70, 0);
+                                    selectedCharacter->m_coords.x += 1;
+                                    selectedCharacter->m_SrcRect = selectedCharacter->m_rightFacing;
+                                    selectedCharacter->m_directionFacing = 3;
+                                    if (check_move_collision(characters, selectedCharacter, enemies))
+                                    {
+                                        selectedCharacter->move(-70, 0);
+                                        selectedCharacter->m_coords.x -= 1;
+                                    }
                                 }
                             }
                         }
@@ -143,6 +148,7 @@ void core::loop()
                         {
                             if ((cursor.m_coords.x + 1) <= map_Boundary.x)
                             {
+
                                 cursor.move(70, 0);
                                 cursor.m_coords.x += 1;
                             }
@@ -154,14 +160,17 @@ void core::loop()
                         {
                             if (check_top_bound_move(selectedCharacter))
                             {
-                                selectedCharacter->move(0, -70);
-                                selectedCharacter->m_coords.y -= 1;
-                                selectedCharacter->m_SrcRect = selectedCharacter->m_backFacing;
-                                selectedCharacter->m_directionFacing = 1;
-                                if (check_move_collision(characters, selectedCharacter, enemies))
+                                if(map[selectedCharacter->m_coords.y - 1].m_moveable)
                                 {
-                                    selectedCharacter->move(0, 70);
-                                    selectedCharacter->m_coords.y += 1;
+                                    selectedCharacter->move(0, -70);
+                                    selectedCharacter->m_coords.y -= 1;
+                                    selectedCharacter->m_SrcRect = selectedCharacter->m_backFacing;
+                                    selectedCharacter->m_directionFacing = 1;
+                                    if (check_move_collision(characters, selectedCharacter, enemies))
+                                    {
+                                        selectedCharacter->move(0, 70);
+                                        selectedCharacter->m_coords.y += 1;
+                                    }
                                 }
                             }
                         }
@@ -180,14 +189,17 @@ void core::loop()
                         {
                             if (check_bottom_bound_move(selectedCharacter))
                             {
-                                selectedCharacter->move(0, 70);
-                                selectedCharacter->m_coords.y += 1;
-                                selectedCharacter->m_SrcRect = selectedCharacter->m_frontFacing;
-                                selectedCharacter->m_directionFacing = 4;
-                                if (check_move_collision(characters, selectedCharacter, enemies))
+                                if(map[selectedCharacter->m_coords.y + 1].m_moveable)
                                 {
-                                    selectedCharacter->move(0, -70);
-                                    selectedCharacter->m_coords.y -= 1;
+                                    selectedCharacter->move(0, 70);
+                                    selectedCharacter->m_coords.y += 1;
+                                    selectedCharacter->m_SrcRect = selectedCharacter->m_frontFacing;
+                                    selectedCharacter->m_directionFacing = 4;
+                                    if (check_move_collision(characters, selectedCharacter, enemies))
+                                    {
+                                        selectedCharacter->move(0, -70);
+                                        selectedCharacter->m_coords.y -= 1;
+                                    }
                                 }
                             }
                         }
@@ -326,7 +338,7 @@ void core::loop()
 
     SDL_RenderClear(renderer);
 
-    for(int i = 0; i < 225; i++)
+    for(int i = 0; i < mapSize; i++)
     {
         SDL_RenderCopy(renderer, map[i].m_texture, &map[i].m_SrcRect, &map[i].m_DestRect);
     }
@@ -335,7 +347,7 @@ void core::loop()
     {
         if(characters.at(i) == selectedCharacter)
         {
-            characters.at(i)->showMoveRange(moveRangeMap);
+            characters.at(i)->showMoveRange(moveRangeMap, map);
         }
     }
 
@@ -377,6 +389,27 @@ void core::loop()
     {
         SDL_RenderCopy(renderer, cursor.m_tex, &cursor.m_SrcRect, &cursor.m_DestRect);
     }
+
+    if(selectedCharacter == nullptr)
+    {
+        for(int i = 0; i < characters.size(); i++)
+        {
+            if(cursor.m_coords.x == characters.at(i)->m_coords.x && cursor.m_coords.y == characters.at(i)->m_coords.y)
+            {
+                characters.at(i)->setHealthDisplayNums();
+                characters.at(i)->m_healthDisplay.draw(true);
+            }
+        }
+        for(int i = 0; i < enemies.size(); i++)
+        {
+            if(cursor.m_coords.x == enemies.at(i)->m_coords.x && cursor.m_coords.y == enemies.at(i)->m_coords.y)
+            {
+                enemies.at(i)->setHealthDisplayNums();
+                enemies.at(i)->m_healthDisplay.draw(false);
+            }
+        }
+    }
+
     if(selectedCharacter != nullptr)
     {
         if(selectedCharacter->m_showInventory)
@@ -454,12 +487,46 @@ void core::run()
 
     std::cout << "checkpoint 100" << std::endl;
 
-    for (int i = 0; i < 225; i++)
+    std::fstream data_file;
+
+    data_file.open("assets/tiles.txt", std::ios::in);
+
+    std::cout << "checkpoint 100 a" << std::endl;
+
+    std::vector<std::string> values;
+    int i = 0;
+
+    if(data_file.is_open())
     {
-        map[i].setValues(20, 10, "assets/TileSet1.png", false);
-        map[i].m_texture = load_texture(map[i].m_srcImage);
-        map[i].setSrcRect(32, 16, 16, 16);
-        map[i].setDestRect((i % 15) * 70, (i / 15) * 70, 70, 70);
+        std::cout << "checkpoint 100 b" << std::endl;
+        std::string data;
+        while(getline(data_file, data))
+        {
+            std::cout << "checkpoint 100 c while loop" << std::endl;
+            values = stripWhitespaces(data);
+            if(values.at(3) == "true")
+            {
+                std::cout << "checkpoint 100 d move true" << std::endl;
+                map[i].setValues(std::stoi(values.at(0)), std::stoi(values.at(1)), values.at(2), true);
+            }
+            else if(values.at(3) == "false")
+            {
+                std::cout << "checkpoint 100 e move false" << std::endl;
+                map[i].setValues(std::stoi(values.at(0)), std::stoi(values.at(1)), values.at(2), false);
+            }
+            map[i].m_texture = load_texture(map[i].m_srcImage);
+
+            std::cout << "checkpoint 100 f" << std::endl;
+            map[i].setSrcRect(std::stoi(values.at(4)), std::stoi(values.at(5)), 16, 16);
+            std::cout << "checkpoint 100 g" << std::endl;
+            map[i].setDestRect((i % 15) * 70, (i / 15) * 70, 70, 70);
+            std::cout << "checkpoint 100 h" << std::endl;
+            i++;
+
+        }
+        data_file.close();
+        mapSize = i;
+        std::cout << "MAP SIZE: " << mapSize << std::endl;
     }
 
     std::cout << "checkpoint 101" << std::endl;
@@ -510,6 +577,10 @@ void core::run()
     char3.setRightFacing(0, 60);
     char3.setBackFacing(0, 90);
 
+    char3.m_strength = 7;
+    char3.m_defense = 5;
+    char3.m_speed = 5;
+
     char3.core = this;
 
     characters.push_back(&char3);
@@ -551,7 +622,7 @@ void core::run()
     inventory.m_texture = load_texture(inventory.m_SrcString);
 
     inventory.setSrcRect(0, 0, 240, 160);
-    inventory.setDestRect(0, 0, 1050, 1050);
+    inventory.setDestRect(0, 0, 980, 980);
 
     waitMenu.m_SrcString = "assets/waitMenu.png";
     waitMenu.core = this;
@@ -583,9 +654,9 @@ void core::run()
 
     std::cout << "checkpoint 110a" << std::endl;
 
-    map_Boundary.x = 14;
-    map_Boundary.y = 12;
-
+    map_Boundary.x = 13;
+    map_Boundary.y = 13;
+    
     std::cout << "checkpoint 110b" << std::endl;
 
     //m_enemyPhasePopUp.m_texture = load_texture("assets/EnemyPhase.png");
@@ -917,31 +988,76 @@ void core::createCharacter(character* _character, std::string _fileName)
        _character->m_defenseNum.m_fonts.at(i).m_texture = load_texture("assets/font.png");
        _character->m_healthNumCurrent.m_fonts.at(i).m_texture = load_texture("assets/font.png");
        _character->m_healthNumMax.m_fonts.at(i).m_texture = load_texture("assets/font.png");
+       _character->m_healthDisplay.m_healthCurrent.m_fonts.at(i).m_texture = load_texture("assets/font.png");
+       _character->m_healthDisplay.m_healthMax.m_fonts.at(i).m_texture = load_texture("assets/font.png");
+    }
+
+    for(int i = 0; i < _character->m_healthDisplay.m_healthWord.m_fonts.size(); i++)
+    {
+        _character->m_healthDisplay.m_healthWord.m_fonts.at(i).m_texture = load_texture("assets/font2.png");
+        _character->m_healthDisplay.m_playerWord.m_fonts.at(i).m_texture = load_texture("assets/font2.png");
     }
 
     _character->setNumRects();
+
+    _character->m_healthDisplay.core = this;
+    _character->m_healthDisplay.m_texture = load_texture("assets/HealthGuiBackground.png");
 
     characters.push_back(_character);
 }
 
 std::vector<std::string> core::stripWhitespaces(std::string _string)
 {
+    std::vector<char> currentString;
 
-    std::vector<std::string> currentString;
     std::vector<std::string> finishedString;
+
+    int finishedStrings = 0;
+
+    std::cout << _string << std::endl;
+
+    for(int i = 0; i < 7; i++)
+    {
+        finishedString.push_back("");
+    }
+
+    std::cout << _string.size() << std::endl;
 
     for(int i = 0; i < _string.size(); i++)
     {
-        //if(_string[i] != " ")
-        //{
-            //currentString.push_back(_string[i]);
-            //TODO get help here
-        //}
-        //else
-        //{
-            //finishedString.push_back(currentString);
-            //currentString.empty();
-        //}
+        std::cout << _string[i] << std::endl;
+        if(_string[i] != ' ')
+        {
+            std::cout << "checkpoint 1000" << std::endl;
+            currentString.push_back(_string[i]);
+            std::cout << "checkpoint 1001" << std::endl;
+        }
+        else
+        {
+            std::cout << "checkpoint 1002" << std::endl;
+            for(int i = 0; i < currentString.size(); i++)
+            {
+                finishedString.at(finishedStrings) = finishedString.at(finishedStrings) + currentString.at(i);
+            }
+            currentString.clear();
+            finishedStrings++;
+            std::cout << finishedStrings << std::endl;
+        }
+    }
+
+    if(!currentString.empty())
+    {
+        for(int i = 0; i < currentString.size(); i++)
+        {
+            finishedString.at(finishedStrings) = finishedString.at(finishedStrings) + currentString.at(i);
+        }
+        currentString.clear();
+        finishedStrings++;
+    }
+
+    for(int i = 0; i < finishedString.size(); i++)
+    {
+        std::cout << finishedString.at(i) << std::endl;
     }
 
     return finishedString;
@@ -992,7 +1108,22 @@ void core::createEnemy(enemy *_enemy)
         _enemy->m_defenseNum.m_fonts.at(i).m_texture = load_texture("assets/font.png");
         _enemy->m_healthNumCurrent.m_fonts.at(i).m_texture = load_texture("assets/font.png");
         _enemy->m_healthNumMax.m_fonts.at(i).m_texture = load_texture("assets/font.png");
+        _enemy->m_healthDisplay.m_healthCurrent.m_fonts.at(i).m_texture = load_texture("assets/font.png");
+        _enemy->m_healthDisplay.m_healthMax.m_fonts.at(i).m_texture = load_texture("assets/font.png");
     }
+
+    for(int i = 0; i < _enemy->m_healthDisplay.m_healthWord.m_fonts.size(); i++)
+    {
+        _enemy->m_healthDisplay.m_healthWord.m_fonts.at(i).m_texture = load_texture("assets/font2.png");
+    }
+
+    for(int i = 0; i < _enemy->m_healthDisplay.m_enemyWord.m_fonts.size(); i++)
+    {
+        _enemy->m_healthDisplay.m_enemyWord.m_fonts.at(i).m_texture = load_texture("assets/font2.png");
+    }
+
+    _enemy->m_healthDisplay.core = this;
+    _enemy->m_healthDisplay.m_texture = load_texture("assets/HealthGuiBackground.png");
 
     _enemy->setNumRects();
 

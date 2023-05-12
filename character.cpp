@@ -39,6 +39,8 @@ character::character()
         m_defenseNum.m_fonts.push_back(tempFont);
         m_healthNumMax.m_fonts.push_back(tempFont);
         m_healthNumCurrent.m_fonts.push_back(tempFont);
+        m_healthDisplay.m_healthMax.m_fonts.push_back(tempFont);
+        m_healthDisplay.m_healthCurrent.m_fonts.push_back(tempFont);
     }
 
     srand(time(0));
@@ -90,7 +92,7 @@ void character::setHealth(int _change)
     {
         m_isAlive = false;
     }
-    std::cout << "Current Health: " << m_health << std::endl;
+    std::cout << "Player Current Health: " << m_health << std::endl;
 }
 
 void character::update()
@@ -162,12 +164,15 @@ std::vector<glm::ivec2> character::findMoveBoundary(glm::ivec2 _boundary)
     return moveableCoords;
 }
 
-void character::showMoveRange(tile tile[])
+void character::showMoveRange(tile tile[], class tile map[])
 {
 
     for(int i = 0; i < m_moveableCoords.size(); i++)
     {
-        tile[(m_moveableCoords.at(i).y * 15) + m_moveableCoords.at(i).x].m_draw = true;
+        if(map[(m_moveableCoords.at(i).y * 15) + m_moveableCoords.at(i).x].m_moveable)
+        {
+            tile[(m_moveableCoords.at(i).y * 15) + m_moveableCoords.at(i).x].m_draw = true;
+        }
     }
 }
 
@@ -310,6 +315,7 @@ void character::attack()
                         core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     }
                     core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
+                    setHealth(-(core->enemies.at(i)->m_strength - m_defense));
                     if(core->enemies.at(i)->m_isAlive)
                     {
                         m_experience += 10;
@@ -332,6 +338,7 @@ void character::attack()
                         core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     }
                     core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
+                    setHealth(-(core->enemies.at(i)->m_strength - m_defense));
                     if(core->enemies.at(i)->m_isAlive)
                     {
                         m_experience += 10;
@@ -354,6 +361,7 @@ void character::attack()
                         core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     }
                     core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
+                    setHealth(-(core->enemies.at(i)->m_strength - m_defense));
                     if(core->enemies.at(i)->m_isAlive)
                     {
                         m_experience += 10;
@@ -376,6 +384,7 @@ void character::attack()
                         core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
                     }
                     core->enemies.at(i)->setHealth(-(m_strength - core->enemies.at(i)->m_defense));
+                    setHealth(-(core->enemies.at(i)->m_strength - m_defense));
                     if(core->enemies.at(i)->m_isAlive)
                     {
                         m_experience += 10;
@@ -604,5 +613,20 @@ enemy* character::findEnemyToAttack()
                 }
             }
     }
+}
+
+void character::setHealthDisplayNums()
+{
+    m_healthDisplay.m_healthCurrent.m_fonts.at(0).m_SrcRect = setNumDisplay(m_health / 10);
+    m_healthDisplay.m_healthCurrent.m_fonts.at(1).m_SrcRect = setNumDisplay(m_health % 10);
+
+    m_healthDisplay.m_healthCurrent.m_fonts.at(0).setDestRect(130, 875, 16, 16);
+    m_healthDisplay.m_healthCurrent.m_fonts.at(1).setDestRect(146, 875, 16, 16);
+
+    m_healthDisplay.m_healthMax.m_fonts.at(0).m_SrcRect = setNumDisplay(m_healthMax / 10);
+    m_healthDisplay.m_healthMax.m_fonts.at(1).m_SrcRect = setNumDisplay(m_healthMax % 10);
+
+    m_healthDisplay.m_healthMax.m_fonts.at(0).setDestRect(170, 875, 16, 16);
+    m_healthDisplay.m_healthMax.m_fonts.at(1).setDestRect(186, 875, 16, 16);
 }
 

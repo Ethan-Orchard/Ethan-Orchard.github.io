@@ -128,6 +128,7 @@ void enemy::update()
 
 void enemy::attack(character *_charToAttack)
 {
+
     std::vector<glm::ivec2> attackSpots;
     std::vector<glm::ivec2> moveableAttackSpots;
 
@@ -153,6 +154,7 @@ void enemy::attack(character *_charToAttack)
             _charToAttack->setHealth(-(m_strength - _charToAttack->m_defense));
         }
         _charToAttack->setHealth(-(m_strength - _charToAttack->m_defense));
+        setHealth(-(_charToAttack->m_strength - m_defense));
     }
 }
 
@@ -170,6 +172,8 @@ enemy::enemy()
         m_defenseNum.m_fonts.push_back(tempFont);
         m_healthNumMax.m_fonts.push_back(tempFont);
         m_healthNumCurrent.m_fonts.push_back(tempFont);
+        m_healthDisplay.m_healthCurrent.m_fonts.push_back(tempFont);
+        m_healthDisplay.m_healthMax.m_fonts.push_back(tempFont);
     }
 }
 
@@ -180,7 +184,7 @@ void enemy::setHealth(int _change)
     {
         m_isAlive = false;
     }
-    std::cout << "Current Health: " << m_health << std::endl;
+    std::cout << "Enemy Current Health: " << m_health << std::endl;
 }
 
 SDL_Rect enemy::setNumDisplay(int _number)
@@ -354,5 +358,20 @@ void enemy::drawStats()
     {
         SDL_RenderCopy(core->renderer, m_healthNumMax.m_fonts.at(i).m_texture, &m_healthNumMax.m_fonts.at(i).m_SrcRect, &m_healthNumMax.m_fonts.at(i).m_DestRect);
     }
+}
+
+void enemy::setHealthDisplayNums()
+{
+    m_healthDisplay.m_healthCurrent.m_fonts.at(0).m_SrcRect = setNumDisplay(m_health / 10);
+    m_healthDisplay.m_healthCurrent.m_fonts.at(1).m_SrcRect = setNumDisplay(m_health % 10);
+
+    m_healthDisplay.m_healthCurrent.m_fonts.at(0).setDestRect(130, 875, 16, 16);
+    m_healthDisplay.m_healthCurrent.m_fonts.at(1).setDestRect(146, 875, 16, 16);
+
+    m_healthDisplay.m_healthMax.m_fonts.at(0).m_SrcRect = setNumDisplay(m_healthMax / 10);
+    m_healthDisplay.m_healthMax.m_fonts.at(1).m_SrcRect = setNumDisplay(m_healthMax % 10);
+
+    m_healthDisplay.m_healthMax.m_fonts.at(0).setDestRect(170, 875, 16, 16);
+    m_healthDisplay.m_healthMax.m_fonts.at(1).setDestRect(186, 875, 16, 16);
 }
 
