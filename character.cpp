@@ -164,9 +164,9 @@ void character::showMoveRange(tile tile[], class tile map[])
 
     for(int i = 0; i < m_moveableCoords.size(); i++)
     {
-        if(map[(m_moveableCoords.at(i).y * 15) + m_moveableCoords.at(i).x].m_moveable)
+        if(map[(m_moveableCoords.at(i).y * 12) + m_moveableCoords.at(i).x].m_moveable)
         {
-            tile[(m_moveableCoords.at(i).y * 15) + m_moveableCoords.at(i).x].m_draw = true;
+            tile[(m_moveableCoords.at(i).y * 12) + m_moveableCoords.at(i).x].m_draw = true;
         }
     }
 }
@@ -504,8 +504,8 @@ void character::drawStats()
     m_strengthNum.m_fonts.at(0).m_SrcRect = setNumDisplay(m_strength / 10);
     m_strengthNum.m_fonts.at(1).m_SrcRect = setNumDisplay(m_strength % 10);
 
-    m_strengthNum.m_fonts.at(0).setDestRect(800, 120, 32, 32);
-    m_strengthNum.m_fonts.at(1).setDestRect(832, 120, 32, 32);
+    m_strengthNum.m_fonts.at(0).setDestRect(725, 120, 32, 32);
+    m_strengthNum.m_fonts.at(1).setDestRect(757, 120, 32, 32);
 
     for(int i = 0; i < m_strengthNum.m_fonts.size(); i++)
     {
@@ -515,8 +515,8 @@ void character::drawStats()
     m_skillNum.m_fonts.at(0).m_SrcRect = setNumDisplay(m_skill / 10);
     m_skillNum.m_fonts.at(1).m_SrcRect = setNumDisplay(m_skill % 10);
 
-    m_skillNum.m_fonts.at(0).setDestRect(800, 170, 32, 32);
-    m_skillNum.m_fonts.at(1).setDestRect(832, 170, 32, 32);
+    m_skillNum.m_fonts.at(0).setDestRect(725, 170, 32, 32);
+    m_skillNum.m_fonts.at(1).setDestRect(757, 170, 32, 32);
 
     for(int i = 0; i < m_skillNum.m_fonts.size(); i++)
     {
@@ -526,8 +526,8 @@ void character::drawStats()
     m_speedNum.m_fonts.at(0).m_SrcRect = setNumDisplay(m_speed / 10);
     m_speedNum.m_fonts.at(1).m_SrcRect = setNumDisplay(m_speed % 10);
 
-    m_speedNum.m_fonts.at(0).setDestRect(800, 220, 32, 32);
-    m_speedNum.m_fonts.at(1).setDestRect(832, 220, 32, 32);
+    m_speedNum.m_fonts.at(0).setDestRect(725, 220, 32, 32);
+    m_speedNum.m_fonts.at(1).setDestRect(757, 220, 32, 32);
 
     for(int i = 0; i < m_speedNum.m_fonts.size(); i++)
     {
@@ -537,8 +537,8 @@ void character::drawStats()
     m_defenseNum.m_fonts.at(0).m_SrcRect = setNumDisplay(m_defense / 10);
     m_defenseNum.m_fonts.at(1).m_SrcRect = setNumDisplay(m_defense % 10);
 
-    m_defenseNum.m_fonts.at(0).setDestRect(800, 270, 32, 32);
-    m_defenseNum.m_fonts.at(1).setDestRect(832, 270, 32, 32);
+    m_defenseNum.m_fonts.at(0).setDestRect(725, 270, 32, 32);
+    m_defenseNum.m_fonts.at(1).setDestRect(757, 270, 32, 32);
 
     for(int i = 0; i < m_defenseNum.m_fonts.size(); i++)
     {
@@ -548,8 +548,8 @@ void character::drawStats()
     m_healthNumCurrent.m_fonts.at(0).m_SrcRect = setNumDisplay(m_health / 10);
     m_healthNumCurrent.m_fonts.at(1).m_SrcRect = setNumDisplay(m_health % 10);
 
-    m_healthNumCurrent.m_fonts.at(0).setDestRect(250, 800, 32, 32);
-    m_healthNumCurrent.m_fonts.at(1).setDestRect(282, 800, 32, 32);
+    m_healthNumCurrent.m_fonts.at(0).setDestRect(215, 800, 32, 32);
+    m_healthNumCurrent.m_fonts.at(1).setDestRect(247, 800, 32, 32);
 
     for(int i = 0; i < m_healthNumCurrent.m_fonts.size(); i++)
     {
@@ -559,8 +559,8 @@ void character::drawStats()
     m_healthNumMax.m_fonts.at(0).m_SrcRect = setNumDisplay(m_healthMax / 10);
     m_healthNumMax.m_fonts.at(1).m_SrcRect = setNumDisplay(m_healthMax % 10);
 
-    m_healthNumMax.m_fonts.at(0).setDestRect(325, 800, 32, 32);
-    m_healthNumMax.m_fonts.at(1).setDestRect(357, 800, 32, 32);
+    m_healthNumMax.m_fonts.at(0).setDestRect(285, 800, 32, 32);
+    m_healthNumMax.m_fonts.at(1).setDestRect(317, 800, 32, 32);
 
     for(int i = 0; i < m_healthNumMax.m_fonts.size(); i++)
     {
@@ -615,13 +615,13 @@ void character::setHealthDisplayNums()
     m_healthDisplay.m_healthCurrent.m_fonts.at(0).m_SrcRect = setNumDisplay(m_health / 10);
     m_healthDisplay.m_healthCurrent.m_fonts.at(1).m_SrcRect = setNumDisplay(m_health % 10);
 
-    m_healthDisplay.m_healthCurrent.m_fonts.at(0).setDestRect(130, 875, 16, 16);
-    m_healthDisplay.m_healthCurrent.m_fonts.at(1).setDestRect(146, 875, 16, 16);
+    m_healthDisplay.m_healthCurrent.m_fonts.at(0).setDestRect(130, 1025, 16, 16);
+    m_healthDisplay.m_healthCurrent.m_fonts.at(1).setDestRect(146, 1025, 16, 16);
 
     m_healthDisplay.m_healthMax.m_fonts.at(0).m_SrcRect = setNumDisplay(m_healthMax / 10);
     m_healthDisplay.m_healthMax.m_fonts.at(1).m_SrcRect = setNumDisplay(m_healthMax % 10);
 
-    m_healthDisplay.m_healthMax.m_fonts.at(0).setDestRect(170, 875, 16, 16);
-    m_healthDisplay.m_healthMax.m_fonts.at(1).setDestRect(186, 875, 16, 16);
+    m_healthDisplay.m_healthMax.m_fonts.at(0).setDestRect(170, 1025, 16, 16);
+    m_healthDisplay.m_healthMax.m_fonts.at(1).setDestRect(186, 1025, 16, 16);
 }
 

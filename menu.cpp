@@ -16,7 +16,6 @@ int menu::getOptionSelected(bool _freeHandling)
 
     if (m_optionSelected != 0)
     {
-        std::cout << "resetting selected menu" << std::endl;
         m_tempOptionSelected = core->selectedMenu->m_optionSelected;
         core->selectedMenu->m_optionSelected = 0;
         core->selectedMenu->m_optionHighlighted = 1;

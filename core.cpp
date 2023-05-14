@@ -15,7 +15,7 @@
 core::core()
 {
 
-    SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 980, 980, SDL_WINDOW_RESIZABLE);
+    SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 840, 1050, SDL_WINDOW_RESIZABLE);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
@@ -24,6 +24,11 @@ core::core()
 
 void core::loop()
 {
+
+    if(enemies.empty())
+    {
+        quit = true;
+    }
 
     int charsMoved = 0;
 
@@ -90,7 +95,7 @@ void core::loop()
                         {
                             if (check_left_bound_move(selectedCharacter))
                             {
-                                if(map[selectedCharacter->m_coords.x - 1].m_moveable)
+                                if(map[(selectedCharacter->m_coords.y * 12) + selectedCharacter->m_coords.x - 1].m_moveable)
                                 {
                                     selectedCharacter->move(-70, 0);
                                     selectedCharacter->m_coords.x -= 1;
@@ -120,7 +125,7 @@ void core::loop()
                         {
                             if (check_right_bound_move(selectedCharacter))
                             {
-                                if(map[selectedCharacter->m_coords.x + 1].m_moveable)
+                                if(map[(selectedCharacter->m_coords.y * 12) + selectedCharacter->m_coords.x + 1].m_moveable)
                                 {
                                     selectedCharacter->move(70, 0);
                                     selectedCharacter->m_coords.x += 1;
@@ -150,7 +155,7 @@ void core::loop()
                         {
                             if (check_top_bound_move(selectedCharacter))
                             {
-                                if(map[selectedCharacter->m_coords.y - 1].m_moveable)
+                                if(map[((selectedCharacter->m_coords.y - 1) * 12) + selectedCharacter->m_coords.x].m_moveable)
                                 {
                                     selectedCharacter->move(0, -70);
                                     selectedCharacter->m_coords.y -= 1;
@@ -179,7 +184,7 @@ void core::loop()
                         {
                             if (check_bottom_bound_move(selectedCharacter))
                             {
-                                if(map[selectedCharacter->m_coords.y + 1].m_moveable)
+                                if(map[((selectedCharacter->m_coords.y + 1) * 12) + selectedCharacter->m_coords.x].m_moveable)
                                 {
                                     selectedCharacter->move(0, 70);
                                     selectedCharacter->m_coords.y += 1;
@@ -474,7 +479,6 @@ void core::s_loop(void *user_data)
 
 void core::run()
 {
-
     std::fstream data_file;
 
     data_file.open("assets/tiles.txt", std::ios::in);
@@ -498,7 +502,7 @@ void core::run()
             }
             map[i].m_texture = load_texture(map[i].m_srcImage);
             map[i].setSrcRect(std::stoi(values.at(4)), std::stoi(values.at(5)), 16, 16);
-            map[i].setDestRect((i % 15) * 70, (i / 15) * 70, 70, 70);
+            map[i].setDestRect((i % 12) * 70, (i / 12) * 70, 70, 70);
             i++;
 
         }
@@ -510,55 +514,50 @@ void core::run()
         moveRangeMap[i].setValues(20, 10, "assets/TileSet1.png", false);
         moveRangeMap[i].m_texture = load_texture(moveRangeMap[i].m_srcImage);
         moveRangeMap[i].setSrcRect(272, 0, 16, 16);
-        moveRangeMap[i].setDestRect((i % 15) * 70, (i / 15) * 70, 70, 70);
+        moveRangeMap[i].setDestRect((i % 12) * 70, (i / 12) * 70, 70, 70);
         moveRangeMap[i].m_draw = false;
     }
 
-    char1.setSrcImage("assets/pkmn_teddiursa.png");
+    char1.setSrcImage("assets/BladeLord.png");
 
     char1.name = "char1";
 
     createCharacter(&char1, "assets/LordStats.txt");
 
-    char2.setSrcImage("assets/pkmn_mudkip2.png");
+    char2.setSrcImage("assets/Caleb.png");
 
     char2.name = "char2";
 
     createCharacter(&char2, "assets/CalebStats.txt");
 
-    char3.setSrcImage("assets/pkmn_squirtle.png");
+    char3.setSrcImage("assets/Soldier.png");
 
     char3.name = "char3";
 
-    char3.setSrcRect(0, 0, 30, 30);
-    char3.setDestRect(840, 280, map[0].m_width, map[0].m_height);
+    createCharacter(&char3, "assets/Char3Stats.txt");
 
-    char3.setCoords();
+    char4.setSrcImage("assets/Succubus.png");
 
-    char3.setFrontFacing(0, 0);
-    char3.setLeftFacing(0, 30);
-    char3.setRightFacing(0, 60);
-    char3.setBackFacing(0, 90);
+    char4.name = "char4";
 
-    char3.m_strength = 7;
-    char3.m_defense = 5;
-    char3.m_speed = 5;
-
-    char3.core = this;
-
-    characters.push_back(&char3);
-
+    createCharacter(&char4, "assets/Succubus.txt");
 
     for (int i = 0; i < characters.size(); i++)
     {
         characters.at(i)->m_texture = load_texture(characters.at(i)->m_srcImage);
     }
 
-    createEnemy(&enemy1);
+    createEnemy(&enemy1, "assets/enemy1.txt");
 
     enemy1.m_SrcString = ("assets/logo.png");
 
-    enemy1.core = this;
+    enemy2.m_SrcString = ("assets/logo.png");
+
+    createEnemy(&enemy2, "assets/enemy2.txt");
+
+    enemy3.m_SrcString = ("assets/logo.png");
+
+    createEnemy(&enemy3, "assets/enemy3.txt");
 
     for(int i = 0; i < enemies.size(); i++)
     {
@@ -580,7 +579,7 @@ void core::run()
     inventory.m_texture = load_texture(inventory.m_SrcString);
 
     inventory.setSrcRect(0, 0, 240, 160);
-    inventory.setDestRect(0, 0, 980, 980);
+    inventory.setDestRect(0, 0, 840, 1050);
 
     waitMenu.m_SrcString = "assets/waitMenu.png";
     waitMenu.core = this;
@@ -606,8 +605,8 @@ void core::run()
 
     selectedMenu = nullptr;
 
-    map_Boundary.x = 13;
-    map_Boundary.y = 13;
+    map_Boundary.x = 11;
+    map_Boundary.y = 14;
     //m_enemyPhasePopUp.m_texture = load_texture("assets/EnemyPhase.png");
 
     m_enemyPhasePopUp.setSrcRect(0, 80, 250, 20);
@@ -637,28 +636,28 @@ void core::run()
     }
 
     m_strengthWord.m_fonts.at(0).setSrcRect(89, 32, 16, 16);
-    m_strengthWord.m_fonts.at(0).setDestRect(500, 120, 32, 32);
+    m_strengthWord.m_fonts.at(0).setDestRect(400, 120, 32, 32);
 
     m_strengthWord.m_fonts.at(1).setSrcRect(105, 32, 16, 16);
-    m_strengthWord.m_fonts.at(1).setDestRect(532, 120, 32, 32);
+    m_strengthWord.m_fonts.at(1).setDestRect(432, 120, 32, 32);
 
     m_strengthWord.m_fonts.at(2).setSrcRect(73, 32, 16, 16);
-    m_strengthWord.m_fonts.at(2).setDestRect(564, 120, 32, 32);
+    m_strengthWord.m_fonts.at(2).setDestRect(464, 120, 32, 32);
 
     m_strengthWord.m_fonts.at(3).setSrcRect(73, 16, 16, 16);
-    m_strengthWord.m_fonts.at(3).setDestRect(596, 120, 32, 32);
+    m_strengthWord.m_fonts.at(3).setDestRect(496, 120, 32, 32);
 
     m_strengthWord.m_fonts.at(4).setSrcRect(9, 32, 16, 16);
-    m_strengthWord.m_fonts.at(4).setDestRect(628, 120, 32, 32);
+    m_strengthWord.m_fonts.at(4).setDestRect(528, 120, 32, 32);
 
     m_strengthWord.m_fonts.at(5).setSrcRect(105, 16, 16, 16);
-    m_strengthWord.m_fonts.at(5).setDestRect(660, 120, 32, 32);
+    m_strengthWord.m_fonts.at(5).setDestRect(560, 120, 32, 32);
 
     m_strengthWord.m_fonts.at(6).setSrcRect(105, 32, 16, 16);
-    m_strengthWord.m_fonts.at(6).setDestRect(692, 120, 32, 32);
+    m_strengthWord.m_fonts.at(6).setDestRect(592, 120, 32, 32);
 
     m_strengthWord.m_fonts.at(7).setSrcRect(121, 16, 16, 16);
-    m_strengthWord.m_fonts.at(7).setDestRect(724, 120, 32, 32);
+    m_strengthWord.m_fonts.at(7).setDestRect(624, 120, 32, 32);
 
     for(int i = 0; i < 5; i++)
     {
@@ -672,19 +671,19 @@ void core::run()
     }
 
     m_skillWord.m_fonts.at(0).setSrcRect(89, 32, 16, 16);
-    m_skillWord.m_fonts.at(0).setDestRect(500, 170, 32, 32);
+    m_skillWord.m_fonts.at(0).setDestRect(400, 170, 32, 32);
 
     m_skillWord.m_fonts.at(1).setSrcRect(169, 16, 16, 16);
-    m_skillWord.m_fonts.at(1).setDestRect(532, 170, 32, 32);
+    m_skillWord.m_fonts.at(1).setDestRect(432, 170, 32, 32);
 
     m_skillWord.m_fonts.at(2).setSrcRect(137, 16, 16, 16);
-    m_skillWord.m_fonts.at(2).setDestRect(564, 170, 32, 32);
+    m_skillWord.m_fonts.at(2).setDestRect(464, 170, 32, 32);
 
     m_skillWord.m_fonts.at(3).setSrcRect(185, 16, 16, 16);
-    m_skillWord.m_fonts.at(3).setDestRect(596, 170, 32, 32);
+    m_skillWord.m_fonts.at(3).setDestRect(496, 170, 32, 32);
 
     m_skillWord.m_fonts.at(4).setSrcRect(185, 16, 16, 16);
-    m_skillWord.m_fonts.at(4).setDestRect(628, 170, 32, 32);
+    m_skillWord.m_fonts.at(4).setDestRect(528, 170, 32, 32);
 
     for(int i = 0; i < 5; i++)
     {
@@ -698,19 +697,19 @@ void core::run()
     }
 
     m_speedWord.m_fonts.at(0).setSrcRect(89, 32, 16, 16);
-    m_speedWord.m_fonts.at(0).setDestRect(500, 220, 32, 32);
+    m_speedWord.m_fonts.at(0).setDestRect(400, 220, 32, 32);
 
     m_speedWord.m_fonts.at(1).setSrcRect(41, 32, 16, 16);
-    m_speedWord.m_fonts.at(1).setDestRect(532, 220, 32, 32);
+    m_speedWord.m_fonts.at(1).setDestRect(432, 220, 32, 32);
 
     m_speedWord.m_fonts.at(2).setSrcRect(73, 16, 16, 16);
-    m_speedWord.m_fonts.at(2).setDestRect(564, 220, 32, 32);
+    m_speedWord.m_fonts.at(2).setDestRect(464, 220, 32, 32);
 
     m_speedWord.m_fonts.at(3).setSrcRect(73, 16, 16, 16);
-    m_speedWord.m_fonts.at(3).setDestRect(596, 220, 32, 32);
+    m_speedWord.m_fonts.at(3).setDestRect(496, 220, 32, 32);
 
     m_speedWord.m_fonts.at(4).setSrcRect(57, 16, 16, 16);
-    m_speedWord.m_fonts.at(4).setDestRect(628, 220, 32, 32);
+    m_speedWord.m_fonts.at(4).setDestRect(528, 220, 32, 32);
 
 
     for(int i = 0; i < 7; i++)
@@ -725,25 +724,25 @@ void core::run()
     }
 
     m_defenseWord.m_fonts.at(0).setSrcRect(57, 16, 16, 16);
-    m_defenseWord.m_fonts.at(0).setDestRect(500, 270, 32, 32);
+    m_defenseWord.m_fonts.at(0).setDestRect(400, 270, 32, 32);
 
     m_defenseWord.m_fonts.at(1).setSrcRect(73, 16, 16, 16);
-    m_defenseWord.m_fonts.at(1).setDestRect(532, 270, 32, 32);
+    m_defenseWord.m_fonts.at(1).setDestRect(432, 270, 32, 32);
 
     m_defenseWord.m_fonts.at(2).setSrcRect(89, 16, 16, 16);
-    m_defenseWord.m_fonts.at(2).setDestRect(564, 270, 32, 32);
+    m_defenseWord.m_fonts.at(2).setDestRect(464, 270, 32, 32);
 
     m_defenseWord.m_fonts.at(3).setSrcRect(73, 16, 16, 16);
-    m_defenseWord.m_fonts.at(3).setDestRect(596, 270, 32, 32);
+    m_defenseWord.m_fonts.at(3).setDestRect(496, 270, 32, 32);
 
     m_defenseWord.m_fonts.at(4).setSrcRect(9, 32, 16, 16);
-    m_defenseWord.m_fonts.at(4).setDestRect(628, 270, 32, 32);
+    m_defenseWord.m_fonts.at(4).setDestRect(528, 270, 32, 32);
 
     m_defenseWord.m_fonts.at(5).setSrcRect(89, 32, 16, 16);
-    m_defenseWord.m_fonts.at(5).setDestRect(660, 270, 32, 32);
+    m_defenseWord.m_fonts.at(5).setDestRect(560, 270, 32, 32);
 
     m_defenseWord.m_fonts.at(6).setSrcRect(73, 16, 16, 16);
-    m_defenseWord.m_fonts.at(6).setDestRect(696, 270, 32, 32);
+    m_defenseWord.m_fonts.at(6).setDestRect(596, 270, 32, 32);
 
     for(int i = 0; i < 6; i++)
     {
@@ -757,22 +756,22 @@ void core::run()
     }
 
     m_healthWord.m_fonts.at(0).setSrcRect(121, 16, 16, 16);
-    m_healthWord.m_fonts.at(0).setDestRect(40, 800, 32, 32);
+    m_healthWord.m_fonts.at(0).setDestRect(10, 800, 32, 32);
 
     m_healthWord.m_fonts.at(1).setSrcRect(73, 16, 16, 16);
-    m_healthWord.m_fonts.at(1).setDestRect(72, 800, 32, 32);
+    m_healthWord.m_fonts.at(1).setDestRect(42, 800, 32, 32);
 
     m_healthWord.m_fonts.at(2).setSrcRect(9, 16, 16, 16);
-    m_healthWord.m_fonts.at(2).setDestRect(104, 800, 32, 32);
+    m_healthWord.m_fonts.at(2).setDestRect(74, 800, 32, 32);
 
     m_healthWord.m_fonts.at(3).setSrcRect(185, 16, 16, 16);
-    m_healthWord.m_fonts.at(3).setDestRect(136, 800, 32, 32);
+    m_healthWord.m_fonts.at(3).setDestRect(106, 800, 32, 32);
 
     m_healthWord.m_fonts.at(4).setSrcRect(105, 32, 16, 16);
-    m_healthWord.m_fonts.at(4).setDestRect(168, 800, 32, 32);
+    m_healthWord.m_fonts.at(4).setDestRect(138, 800, 32, 32);
 
     m_healthWord.m_fonts.at(5).setSrcRect(121, 16, 16, 16);
-    m_healthWord.m_fonts.at(5).setDestRect(200, 800, 32, 32);
+    m_healthWord.m_fonts.at(5).setDestRect(170, 800, 32, 32);
 
 #ifdef __EMSCRIPTEN__
 
@@ -898,14 +897,14 @@ void core::createCharacter(character* _character, std::string _fileName)
     _character->m_spriteSize.x = std::stoi(stats[6]);
     _character->m_spriteSize.y = std::stoi(stats[7]);
 
-    _character->setSrcRect(0, 0, _character->m_spriteSize.x, _character->m_spriteSize.y);
+    _character->setSrcRect(0, _character->m_spriteSize.y * std::stoi(stats[15]), _character->m_spriteSize.x, _character->m_spriteSize.y);
     _character->setDestRect(std::stoi(stats[8]) * _character->m_width, std::stoi(stats[9]) * _character->m_height, _character->m_width, _character->m_height);
 
     _character->setCoords();
 
-    _character->setFrontFacing(0, 0);
-    _character->setBackFacing(0, _character->m_spriteSize.y * 3);
-    _character->setRightFacing(0, _character->m_spriteSize.y * 2);
+    _character->setFrontFacing(0, _character->m_spriteSize.y * 4);
+    _character->setBackFacing(0, _character->m_spriteSize.y * 8);
+    _character->setRightFacing(0, _character->m_spriteSize.y * 14);
     _character->setLeftFacing(0, _character->m_spriteSize.y);
 
     _character->m_healthGrowth = std::stoi(stats[10]);
@@ -984,11 +983,11 @@ std::vector<std::string> core::stripWhitespaces(std::string _string)
     return finishedString;
 }
 
-void core::createEnemy(enemy *_enemy)
+void core::createEnemy(enemy *_enemy, std::string _fileName)
 {
     std::fstream data_file;
 
-    data_file.open("assets/enemy.txt", std::ios::in);
+    data_file.open(_fileName, std::ios::in);
 
     std::string stats[20];
     int i = 0;
@@ -1048,5 +1047,10 @@ void core::createEnemy(enemy *_enemy)
 
     _enemy->setNumRects();
 
+    _enemy->core = this;
+
+    _enemy->m_isAlive = true;
+
     enemies.push_back(_enemy);
 }
+

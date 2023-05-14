@@ -54,7 +54,7 @@ public:
 
     void createCharacter(character* _character, std::string _fileName);
 
-    void createEnemy(enemy* _enemy);
+    void createEnemy(enemy* _enemy, std::string _fileName);
 
     void createTile();
 
@@ -73,8 +73,25 @@ public:
     character char1;
     character char2;
     character char3;
+    character char4;
+    character char5;
+    character char6;
 
     enemy enemy1;
+    enemy enemy2;
+    enemy enemy3;
+    enemy enemy4;
+    enemy enemy5;
+    enemy enemy6;
+    enemy enemy7;
+    enemy enemy8;
+    enemy enemy9;
+    enemy enemy10;
+    enemy enemy11;
+    enemy enemy12;
+    enemy enemy13;
+    enemy enemy14;
+    enemy enemy15;
 
     character* selectedCharacter;
 
