@@ -93,6 +93,8 @@ void core::loop()
                     case SDLK_LEFT:
                         if (selectedCharacter != nullptr)
                         {
+                            selectedCharacter->m_SrcRect = selectedCharacter->m_leftFacing;
+                            selectedCharacter->m_directionFacing = 2;
                             if (check_left_bound_move(selectedCharacter))
                             {
                                 if(map[(selectedCharacter->m_coords.y * 12) + selectedCharacter->m_coords.x - 1].m_moveable)
@@ -123,6 +125,8 @@ void core::loop()
                     case SDLK_RIGHT:
                         if (selectedCharacter != nullptr)
                         {
+                            selectedCharacter->m_SrcRect = selectedCharacter->m_rightFacing;
+                            selectedCharacter->m_directionFacing = 3;
                             if (check_right_bound_move(selectedCharacter))
                             {
                                 if(map[(selectedCharacter->m_coords.y * 12) + selectedCharacter->m_coords.x + 1].m_moveable)
@@ -153,6 +157,8 @@ void core::loop()
                     case SDLK_UP:
                         if (selectedCharacter != nullptr)
                         {
+                            selectedCharacter->m_SrcRect = selectedCharacter->m_backFacing;
+                            selectedCharacter->m_directionFacing = 1;
                             if (check_top_bound_move(selectedCharacter))
                             {
                                 if(map[((selectedCharacter->m_coords.y - 1) * 12) + selectedCharacter->m_coords.x].m_moveable)
@@ -182,6 +188,8 @@ void core::loop()
                     case SDLK_DOWN:
                         if (selectedCharacter != nullptr)
                         {
+                            selectedCharacter->m_SrcRect = selectedCharacter->m_frontFacing;
+                            selectedCharacter->m_directionFacing = 4;
                             if (check_bottom_bound_move(selectedCharacter))
                             {
                                 if(map[((selectedCharacter->m_coords.y + 1) * 12) + selectedCharacter->m_coords.x].m_moveable)

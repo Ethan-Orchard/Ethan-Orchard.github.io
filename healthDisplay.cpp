@@ -7,7 +7,7 @@
 
 void healthDisplay::draw(bool _player) {
 
-    gui::draw();
+    //gui::draw();
 
     SDL_RenderCopy(core->renderer, m_texture, NULL, &m_DestRect);
 
