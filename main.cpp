@@ -23,9 +23,9 @@ int main()
 
   core core;
 
+  std::cout << "checkpoint 2" << std::endl;
+
   core.run();
 
   return 0;
 }
-
-
