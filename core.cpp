@@ -15,19 +15,19 @@
 core::core()
 {
 
-    std::cout << "checkpoint core 1" << std::endl;
+    std::cout << "checkpoint core constructor" << std::endl;
 
     SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 840, 1050, SDL_WINDOW_RESIZABLE);
 
-    std::cout << "checkpoint core 2" << std::endl;
+    std::cout << "checkpoint core constructor 2" << std::endl;
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    std::cout << "checkpoint core 3" << std::endl;
+    std::cout << "checkpoint core constructor 3" << std::endl;
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-    std::cout << "checkpoint core 4" << std::endl;
+    std::cout << "checkpoint core constructor 4" << std::endl;
 }
 
 void core::loop()
@@ -495,6 +495,7 @@ void core::s_loop(void *user_data)
 
 void core::run()
 {
+
     std::fstream data_file;
 
     data_file.open("assets/tiles.txt", std::ios::in);
@@ -573,33 +574,33 @@ void core::run()
 
     createEnemy(&enemy1, "assets/enemy1.txt");
 
-    enemy1.m_SrcString = ("assets/enemyMyrmidon.png");
+    enemy1.m_SrcString = ("assets/EnemyMyrmidon.png");
 
-    enemy2.m_SrcString = ("assets/enemyMyrmidon.png");
+    enemy2.m_SrcString = ("assets/EnemyMyrmidon.png");
 
     createEnemy(&enemy2, "assets/enemy2.txt");
 
-    enemy3.m_SrcString = ("assets/enemyBrigand.png");
+    enemy3.m_SrcString = ("assets/EnemyBrigand.png");
 
     createEnemy(&enemy3, "assets/enemy3.txt");
 
-    enemy4.m_SrcString = ("assets/enemyBrigand.png");
+    enemy4.m_SrcString = ("assets/EnemyBrigand.png");
 
     createEnemy(&enemy4, "assets/enemy4.txt");
 
-    enemy5.m_SrcString = "assets/enemyMyrmidon.png";
+    enemy5.m_SrcString = "assets/EnemyMyrmidon.png";
 
     createEnemy(&enemy5, "assets/enemy5.txt");
 
-    enemy6.m_SrcString = "assets/enemyBrigand.png";
+    enemy6.m_SrcString = "assets/EnemyBrigand.png";
 
     createEnemy(&enemy6, "assets/enemy6.txt");
 
-    enemy7.m_SrcString = "assets/enemyBrigand.png";
+    enemy7.m_SrcString = "assets/EnemyBrigand.png";
 
     createEnemy(&enemy7, "assets/enemy7.txt");
 
-    enemy8.m_SrcString = "assets/enemyBrigand.png";
+    enemy8.m_SrcString = "assets/EnemyBrigand.png";
 
     createEnemy(&enemy8, "assets/enemy8.txt");
 
@@ -607,15 +608,15 @@ void core::run()
 
     createEnemy(&enemy9, "assets/enemy9.txt");
 
-    enemy10.m_SrcString = "assets/enemyMyrmidon.png";
+    enemy10.m_SrcString = "assets/EnemyMyrmidon.png";
 
     createEnemy(&enemy10, "assets/enemy10.txt");
 
-    enemy11.m_SrcString = "assets/enemyBrigand.png";
+    enemy11.m_SrcString = "assets/EnemyBrigand.png";
 
     createEnemy(&enemy11, "assets/enemy11.txt");
 
-    enemy12.m_SrcString = "assets/enemyBrigand.png";
+    enemy12.m_SrcString = "assets/EnemyBrigand.png";
 
     createEnemy(&enemy12, "assets/enemy12.txt");
 
@@ -623,7 +624,7 @@ void core::run()
 
     createEnemy(&enemy13, "assets/enemy13.txt");
 
-    enemy14.m_SrcString = "assets/enemyMyrmidon.png";
+    enemy14.m_SrcString = "assets/EnemyMyrmidon.png";
 
     createEnemy(&enemy14, "assets/enemy14.txt");
 
@@ -1125,3 +1126,9 @@ void core::createEnemy(enemy *_enemy, std::string _fileName)
 
     enemies.push_back(_enemy);
 }
+
+void core::createTile()
+{
+
+}
+

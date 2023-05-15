@@ -18,14 +18,11 @@
 
 int main()
 {
-
-  std::cout << "checkpoint main" << std::endl;
-
   core core;
-
-  std::cout << "checkpoint 2" << std::endl;
 
   core.run();
 
   return 0;
 }
+
+

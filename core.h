@@ -36,7 +36,6 @@
 class core{
 public:
 
-
     core();
 
     void run();
