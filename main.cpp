@@ -19,11 +19,11 @@
 int main()
 {
 
+  std::cout << "checkpoint main" << std::endl;
+
   core core;
 
   core.run();
 
   return 0;
 }
-
-
