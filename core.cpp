@@ -496,6 +496,8 @@ void core::s_loop(void *user_data)
 void core::run()
 {
 
+    std::cout << "checkpoint core run" << std::endl;
+
     std::fstream data_file;
 
     data_file.open("assets/tiles.txt", std::ios::in);
@@ -535,6 +537,8 @@ void core::run()
         moveRangeMap[i].m_draw = false;
     }
 
+    std::cout << "checkpoint core run 2" << std::endl;
+
     char1.setSrcImage("assets/BladeLord.png");
 
     char1.name = "char1";
@@ -571,6 +575,8 @@ void core::run()
     {
         characters.at(i)->m_texture = load_texture(characters.at(i)->m_srcImage);
     }
+
+    std::cout << "checkpoint core run 3" << std::endl;
 
     createEnemy(&enemy1, "assets/enemy1.txt");
 
