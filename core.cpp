@@ -15,11 +15,19 @@
 core::core()
 {
 
+    std::cout << "checkpoint core 1" << std::endl;
+
     SDL_Window* window = SDL_CreateWindow("FEC", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 840, 1050, SDL_WINDOW_RESIZABLE);
+
+    std::cout << "checkpoint core 2" << std::endl;
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    std::cout << "checkpoint core 3" << std::endl;
+
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+
+    std::cout << "checkpoint core 4" << std::endl;
 }
 
 void core::loop()
@@ -1117,4 +1125,3 @@ void core::createEnemy(enemy *_enemy, std::string _fileName)
 
     enemies.push_back(_enemy);
 }
-
