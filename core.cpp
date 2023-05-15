@@ -519,9 +519,9 @@ void core::run()
     }
     for (int i = 0; i < 225; i++)
     {
-        moveRangeMap[i].setValues(20, 10, "assets/TileSet1.png", false);
+        moveRangeMap[i].setValues(20, 10, "assets/Movement_Range.png", false);
         moveRangeMap[i].m_texture = load_texture(moveRangeMap[i].m_srcImage);
-        moveRangeMap[i].setSrcRect(272, 0, 16, 16);
+        moveRangeMap[i].setSrcRect(0, 0, 16, 16);
         moveRangeMap[i].setDestRect((i % 12) * 70, (i / 12) * 70, 70, 70);
         moveRangeMap[i].m_draw = false;
     }
@@ -550,6 +550,14 @@ void core::run()
 
     createCharacter(&char4, "assets/Succubus.txt");
 
+    char5.setSrcImage("assets/IceDragon.png");
+
+    createCharacter(&char5, "assets/EthanStats.txt");
+
+    char6.setSrcImage("assets/Sephiroth.png");
+
+    createCharacter(&char6, "assets/Sephiroth.txt");
+
     for (int i = 0; i < characters.size(); i++)
     {
         characters.at(i)->m_texture = load_texture(characters.at(i)->m_srcImage);
@@ -557,15 +565,63 @@ void core::run()
 
     createEnemy(&enemy1, "assets/enemy1.txt");
 
-    enemy1.m_SrcString = ("assets/logo.png");
+    enemy1.m_SrcString = ("assets/enemyMyrmidon.png");
 
-    enemy2.m_SrcString = ("assets/logo.png");
+    enemy2.m_SrcString = ("assets/enemyMyrmidon.png");
 
     createEnemy(&enemy2, "assets/enemy2.txt");
 
-    enemy3.m_SrcString = ("assets/logo.png");
+    enemy3.m_SrcString = ("assets/enemyBrigand.png");
 
     createEnemy(&enemy3, "assets/enemy3.txt");
+
+    enemy4.m_SrcString = ("assets/enemyBrigand.png");
+
+    createEnemy(&enemy4, "assets/enemy4.txt");
+
+    enemy5.m_SrcString = "assets/enemyMyrmidon.png";
+
+    createEnemy(&enemy5, "assets/enemy5.txt");
+
+    enemy6.m_SrcString = "assets/enemyBrigand.png";
+
+    createEnemy(&enemy6, "assets/enemy6.txt");
+
+    enemy7.m_SrcString = "assets/enemyBrigand.png";
+
+    createEnemy(&enemy7, "assets/enemy7.txt");
+
+    enemy8.m_SrcString = "assets/enemyBrigand.png";
+
+    createEnemy(&enemy8, "assets/enemy8.txt");
+
+    enemy9.m_SrcString = "assets/EnemySoldier.png";
+
+    createEnemy(&enemy9, "assets/enemy9.txt");
+
+    enemy10.m_SrcString = "assets/enemyMyrmidon.png";
+
+    createEnemy(&enemy10, "assets/enemy10.txt");
+
+    enemy11.m_SrcString = "assets/enemyBrigand.png";
+
+    createEnemy(&enemy11, "assets/enemy11.txt");
+
+    enemy12.m_SrcString = "assets/enemyBrigand.png";
+
+    createEnemy(&enemy12, "assets/enemy12.txt");
+
+    enemy13.m_SrcString = "assets/EnemySoldier.png";
+
+    createEnemy(&enemy13, "assets/enemy13.txt");
+
+    enemy14.m_SrcString = "assets/enemyMyrmidon.png";
+
+    createEnemy(&enemy14, "assets/enemy14.txt");
+
+    enemy15.m_SrcString = "assets/EnemySoldier.png";
+
+    createEnemy(&enemy15, "assets/enemy15.txt");
 
     for(int i = 0; i < enemies.size(); i++)
     {
@@ -1025,7 +1081,7 @@ void core::createEnemy(enemy *_enemy, std::string _fileName)
     _enemy->m_coords.x = (std::stoi(stats[8]));
     _enemy->m_coords.y = (std::stoi(stats[9]));
 
-    _enemy->setSrcRect(0,0, _enemy->m_spriteSize.x, _enemy->m_spriteSize.y);
+    _enemy->setSrcRect(0,_enemy->m_spriteSize.y * std::stoi(stats[10]), _enemy->m_spriteSize.x, _enemy->m_spriteSize.y);
     _enemy->setDestRect(_enemy->m_coords.x * 70, _enemy->m_coords.y * 70, 70, 70);
 
     for(int i = 0; i < 2; i++)

@@ -124,6 +124,8 @@ void enemy::attack(character *_charToAttack)
     std::vector<glm::ivec2> attackSpots;
     std::vector<glm::ivec2> moveableAttackSpots;
 
+    bool spotTaken = false;
+
     attackSpots.push_back(glm::ivec2(_charToAttack->m_coords.x - 1, _charToAttack->m_coords.y));
     attackSpots.push_back(glm::ivec2(_charToAttack->m_coords.x + 1, _charToAttack->m_coords.y));
     attackSpots.push_back(glm::ivec2(_charToAttack->m_coords.x, _charToAttack->m_coords.y - 1));
@@ -131,9 +133,20 @@ void enemy::attack(character *_charToAttack)
 
     for(int i = 0; i < attackSpots.size(); i++)
     {
+        spotTaken = false;
         if (std::find(m_moveableCoords.begin(), m_moveableCoords.end(), attackSpots.at(i)) != m_moveableCoords.end())
         {
-            moveableAttackSpots.push_back(attackSpots.at(i));
+            for(int j = 0; j < core->characters.size(); j++)
+            {
+                if(attackSpots.at(i).x == core->characters.at(j)->m_coords.x && attackSpots.at(i).y == core->characters.at(j)->m_coords.y)
+                {
+                    spotTaken = true;
+                }
+            }
+            if(!spotTaken)
+            {
+                moveableAttackSpots.push_back(attackSpots.at(i));
+            }
         }
     }
 
