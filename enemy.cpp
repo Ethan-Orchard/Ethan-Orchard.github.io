@@ -138,7 +138,7 @@ void enemy::attack(character *_charToAttack)
         {
             for(int j = 0; j < core->characters.size(); j++)
             {
-                if(attackSpots.at(i).x == core->characters.at(j)->m_coords.x && attackSpots.at(i).y == core->characters.at(j)->m_coords.y)
+                if(attackSpots.at(i).x == core->characters.at(j)->m_coords.x && attackSpots.at(i).y == core->characters.at(j)->m_coords.y && attackSpots.at(i).x == core->enemies.at(j)->m_coords.x && attackSpots.at(i).y == core->enemies.at(j)->m_coords.y)
                 {
                     spotTaken = true;
                 }
